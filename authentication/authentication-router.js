@@ -13,7 +13,7 @@ router.post("/register",(req,res)=> {
 
         Users.add(userDetails)
             .then(user=>{
-                // req.session.loggedIn === true;
+                req.session.loggedIn === true;
                 res.status(201).json(user)
             })
             .catch(err => {
@@ -28,13 +28,13 @@ router.post("/register",(req,res)=> {
 
 router.post("/login",(req,res)=>{
     const {username, password} = req.body;
-
     if(isValid(req.body)){
         Users.findBy({username})
             .then(users => {
-                if (user[0] && bcryptjs.compareSync(password,user[0].password)){
+
+                if (users[0] && bcryptjs.compareSync(password,users[0].password)){
                     req.session.loggedIn = true;
-                    req.session.user = user;
+                    req.session.user = users[0];
                     res.status(200).json({message: "You made it!"})
                 } else {
                     res.status(401).json({message: "Your username/password is wrong or doesn't exist"})

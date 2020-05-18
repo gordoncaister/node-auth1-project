@@ -16,8 +16,8 @@ const sessionConfig = {
     },
     resave: false,
     saveUninitialized: process.env.USER_ALLOWED_COOKIES || true,
-    name: "monster",
-    secret: process.env.COOKIE_SECRET || "keepitsecret,keepitsafe!",
+    name: "chocchip",
+    secret: process.env.COOKIE_SECRET || "longer;isbetter!",
   };
 
   // create a session and send a cookie back (the cookie will store the session id)
