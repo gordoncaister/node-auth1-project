@@ -26,6 +26,26 @@ router.post("/register",(req,res)=> {
     
 })
 
+router.post("/login",(req,res)=>{
+    const {username, password} = req.body;
+
+    if(isValid(req.body)){
+        Users.findBy({username})
+            .then(users => {
+                if (user[0] && bcryptjs.compareSync(password,user[0].password)){
+                    req.session.loggedIn = true;
+                    req.session.user = user;
+                    res.status(200).json({message: "You made it!"})
+                } else {
+                    res.status(401).json({message: "Your username/password is wrong or doesn't exist"})
+                }
+            })
+            .catch( err => res.status(500).json({error: "Database error while logging in"+err.message}))
+    } else {
+        res.status(400).json({message:"Please provide valid username/password"})
+    }
+})
+
 
 
 function isValid(user) {
